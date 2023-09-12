@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>polyline</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <style>
+    body,
+    html,
+    #container {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        font-family: "微软雅黑";
+    }
+    ul li {
+        list-style: none;
+    }
+    .btn-wrap {
+        z-index: 999;
+        position: fixed;
+        bottom: 3.5rem;
+        margin-left: 3rem;
+        padding: 1rem 1rem;
+        border-radius: .25rem;
+        background-color: #fff;
+        box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
+    }
+    .btn {
+        width: 75px;
+        height: 30px;
+        float: left;
+        background-color: #fff;
+        color: rgba(27, 142, 236, 1);
+        font-size: 14px;
+        border:1px solid rgba(27, 142, 236, 1);
+        border-radius: 5px;
+        margin: 0 5px;
+        text-align: center;
+        line-height: 30px;
+    }
+    .btn:hover {
+        background-color: rgba(27, 142, 236, 0.8);
+        color: #fff;
+    }
+    </style>
+    <script src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=zLhopYPPERGtpGOgimcdKcCimGRyyIsh"></script>
+
+    <script src="https://cdn.bootcss.com/vConsole/3.2.2/vconsole.min.js"></script>
+    <script>
+        var vConsole = new VConsole();
+    </script>
+</head>
+<body>
+    <div id="container"></div>
+    <ul class="btn-wrap" style="z-index: 99;">
+      <button onclick="addNewPolyline()">添加新polyline</button>
+    </ul>
+</body>
+<script>
+  var map = new BMapGL.Map('container');
+  map.centerAndZoom(toPoint( [120.7459443387627, 31.694409602780304]), 12);
+  map.enableScrollWheelZoom(true);
+  
+  function toPoint(cord) {
+    return new BMapGL.Point(cord[0], cord[1])
+  }
+  
+  const points = [
+    [112, 30],
+    [112, 33],
+  ].map(p => {
+    return toPoint(p)
+  })
+  
+  const points1 = [
+    [112.5, 30],
+    [112.5, 33],
+  ].map(p => {
+    return toPoint(p)
+  })
+  
+  
+  var oldPolyline = new BMapGL.Polyline(points, {
+      strokeColor: '#00BEBD',
+      borderColor: '#009192',
+      borderWeight: 0,
+      strokeWeight: 7,
+  })
+  map.addOverlay(oldPolyline)
+  
+  function addNewPolyline () {
+    map.removeOverlay(oldPolyline)
+    const newPolyline = new BMapGL.Polyline(points, {
+      strokeColor: '#00BEBD',
+      borderColor: '#009192',
+      borderWeight: 0,
+      strokeWeight: 7,
+      strokeTexture: {
+        url: 'https://mapopen-pub-jsapigl.bj.bcebos.com/svgmodel/Icon_road_red_arrow.png',
+        width: 16,
+        height:64
+      }
+    })
+   
+    map.addOverlay(newPolyline)
+    oldPolyline = newPolyline
+  }
+  
+  setTimeout(() => {
+    map.setViewport(points)
+  }, 1000);
+  
+  </script>
+</html>
+
