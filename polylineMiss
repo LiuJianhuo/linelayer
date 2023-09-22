@@ -1,0 +1,2188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>MapVGL</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #map_container {
+        height: 100vh;
+    }
+
+    </style>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?type=webgl&v=1.0&ak=zLhopYPPERGtpGOgimcdKcCimGRyyIsh&services="></script>
+
+
+</head>
+<body>
+
+  <script>
+  var theme =  [
+    {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "on",
+            "color": "#ccd6d7ff"
+        }
+    },
+    {
+        "featureType": "green",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "on",
+            "color": "#dee5e5ff"
+        }
+    },
+    {
+        "featureType": "building",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "on"
+        }
+    },
+    {
+        "featureType": "building",
+        "elementType": "geometry.topfill",
+        "stylers": {
+            "color": "#d1dbdbff"
+        }
+    },
+    {
+        "featureType": "building",
+        "elementType": "geometry.sidefill",
+        "stylers": {
+            "color": "#d1dbdbff"
+        }
+    },
+    {
+        "featureType": "building",
+        "elementType": "geometry.stroke",
+        "stylers": {
+            "color": "#aab6b6ff"
+        }
+    },
+    {
+        "featureType": "subwaystation",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "off",
+            "color": "#888fa0ff"
+        }
+    },
+    {
+        "featureType": "education",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "on",
+            "color": "#e1e7e7ff"
+        }
+    },
+    {
+        "featureType": "medical",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "on",
+            "color": "#d1dbdbff"
+        }
+    },
+    {
+        "featureType": "scenicspots",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "on",
+            "color": "#d1dbdbff"
+        }
+    },
+    {
+        "featureType": "highway",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "on",
+            "weight": 4
+        }
+    },
+    {
+        "featureType": "highway",
+        "elementType": "geometry.fill",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "highway",
+        "elementType": "geometry.stroke",
+        "stylers": {
+            "color": "#cacfcfff"
+        }
+    },
+    {
+        "featureType": "highway",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "on"
+        }
+    },
+    {
+        "featureType": "highway",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "highway",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "highway",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "on"
+        }
+    },
+    {
+        "featureType": "arterial",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "on",
+            "weight": 2
+        }
+    },
+    {
+        "featureType": "arterial",
+        "elementType": "geometry.fill",
+        "stylers": {
+            "color": "#fbfffeff"
+        }
+    },
+    {
+        "featureType": "arterial",
+        "elementType": "geometry.stroke",
+        "stylers": {
+            "color": "#cacfcfff"
+        }
+    },
+    {
+        "featureType": "arterial",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "on"
+        }
+    },
+    {
+        "featureType": "arterial",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "arterial",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "local",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "on",
+            "weight": 1
+        }
+    },
+    {
+        "featureType": "local",
+        "elementType": "geometry.fill",
+        "stylers": {
+            "color": "#fbfffeff"
+        }
+    },
+    {
+        "featureType": "local",
+        "elementType": "geometry.stroke",
+        "stylers": {
+            "color": "#cacfcfff"
+        }
+    },
+    {
+        "featureType": "local",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "local",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "local",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "railway",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "off",
+            "weight": 1
+        }
+    },
+    {
+        "featureType": "railway",
+        "elementType": "geometry.fill",
+        "stylers": {
+            "color": "#9494941a"
+        }
+    },
+    {
+        "featureType": "railway",
+        "elementType": "geometry.stroke",
+        "stylers": {
+            "color": "#ffffff1a"
+        }
+    },
+    {
+        "featureType": "subway",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "off",
+            "weight": 1
+        }
+    },
+    {
+        "featureType": "subway",
+        "elementType": "geometry.fill",
+        "stylers": {
+            "color": "#c3bed433"
+        }
+    },
+    {
+        "featureType": "subway",
+        "elementType": "geometry.stroke",
+        "stylers": {
+            "color": "#ffffff33"
+        }
+    },
+    {
+        "featureType": "subway",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "on"
+        }
+    },
+    {
+        "featureType": "subway",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "subway",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "continent",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "on"
+        }
+    },
+    {
+        "featureType": "continent",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "on"
+        }
+    },
+    {
+        "featureType": "continent",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#333333ff"
+        }
+    },
+    {
+        "featureType": "continent",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "city",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "on"
+        }
+    },
+    {
+        "featureType": "city",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "on"
+        }
+    },
+    {
+        "featureType": "city",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#454d50ff"
+        }
+    },
+    {
+        "featureType": "city",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "town",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "on"
+        }
+    },
+    {
+        "featureType": "town",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "town",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#454d50ff"
+        }
+    },
+    {
+        "featureType": "town",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "on"
+        }
+    },
+    {
+        "featureType": "road",
+        "elementType": "geometry.fill",
+        "stylers": {
+            "color": "#fbfffeff"
+        }
+    },
+    {
+        "featureType": "poilabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "districtlabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "poilabel",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "districtlabel",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#888fa0ff"
+        }
+    },
+    {
+        "featureType": "transportation",
+        "elementType": "geometry",
+        "stylers": {
+            "color": "#d1dbdbff"
+        }
+    },
+    {
+        "featureType": "companylabel",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "restaurantlabel",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "lifeservicelabel",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "carservicelabel",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "financelabel",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "otherlabel",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "village",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "district",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "land",
+        "elementType": "geometry",
+        "stylers": {
+            "color": "#edf3f3ff"
+        }
+    },
+    {
+        "featureType": "nationalway",
+        "elementType": "geometry.stroke",
+        "stylers": {
+            "color": "#cacfcfff"
+        }
+    },
+    {
+        "featureType": "provincialway",
+        "elementType": "geometry.stroke",
+        "stylers": {
+            "color": "#cacfcfff"
+        }
+    },
+    {
+        "featureType": "cityhighway",
+        "elementType": "geometry.stroke",
+        "stylers": {
+            "color": "#cacfcfff"
+        }
+    },
+    {
+        "featureType": "road",
+        "elementType": "geometry.stroke",
+        "stylers": {
+            "color": "#cacfcfff"
+        }
+    },
+    {
+        "featureType": "subwaylabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "subwaylabel",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "tertiarywaysign",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "tertiarywaysign",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "provincialwaysign",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "provincialwaysign",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "nationalwaysign",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "nationalwaysign",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "highwaysign",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "highwaysign",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "nationalway",
+        "elementType": "geometry.fill",
+        "stylers": {
+            "color": "#fbfffeff"
+        }
+    },
+    {
+        "featureType": "nationalway",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "provincialway",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "cityhighway",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "cityhighway",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "highway",
+        "stylers": {
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "6"
+        }
+    },
+    {
+        "featureType": "highway",
+        "stylers": {
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "7"
+        }
+    },
+    {
+        "featureType": "highway",
+        "stylers": {
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "8"
+        }
+    },
+    {
+        "featureType": "highway",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "6"
+        }
+    },
+    {
+        "featureType": "highway",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "7"
+        }
+    },
+    {
+        "featureType": "highway",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "8"
+        }
+    },
+    {
+        "featureType": "highway",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "6"
+        }
+    },
+    {
+        "featureType": "highway",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "7"
+        }
+    },
+    {
+        "featureType": "highway",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "8"
+        }
+    },
+    {
+        "featureType": "nationalway",
+        "stylers": {
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "6"
+        }
+    },
+    {
+        "featureType": "nationalway",
+        "stylers": {
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "7"
+        }
+    },
+    {
+        "featureType": "nationalway",
+        "stylers": {
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "8"
+        }
+    },
+    {
+        "featureType": "nationalway",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "6"
+        }
+    },
+    {
+        "featureType": "nationalway",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "7"
+        }
+    },
+    {
+        "featureType": "nationalway",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "8"
+        }
+    },
+    {
+        "featureType": "nationalway",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "6"
+        }
+    },
+    {
+        "featureType": "nationalway",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "7"
+        }
+    },
+    {
+        "featureType": "nationalway",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "8"
+        }
+    },
+    {
+        "featureType": "provincialway",
+        "stylers": {
+            "curZoomRegionId": "0",
+            "curZoomRegion": "8,8",
+            "level": "8"
+        }
+    },
+    {
+        "featureType": "provincialway",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "8,8",
+            "level": "8"
+        }
+    },
+    {
+        "featureType": "provincialway",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "8,8",
+            "level": "8"
+        }
+    },
+    {
+        "featureType": "cityhighway",
+        "stylers": {
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "6"
+        }
+    },
+    {
+        "featureType": "cityhighway",
+        "stylers": {
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "7"
+        }
+    },
+    {
+        "featureType": "cityhighway",
+        "stylers": {
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "8"
+        }
+    },
+    {
+        "featureType": "cityhighway",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "6"
+        }
+    },
+    {
+        "featureType": "cityhighway",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "7"
+        }
+    },
+    {
+        "featureType": "cityhighway",
+        "elementType": "geometry",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "8"
+        }
+    },
+    {
+        "featureType": "cityhighway",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "6"
+        }
+    },
+    {
+        "featureType": "cityhighway",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "7"
+        }
+    },
+    {
+        "featureType": "cityhighway",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off",
+            "curZoomRegionId": "0",
+            "curZoomRegion": "6,8",
+            "level": "8"
+        }
+    },
+    {
+        "featureType": "cityhighway",
+        "elementType": "geometry.fill",
+        "stylers": {
+            "color": "#fbfffeff"
+        }
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#8f5a33ff"
+        }
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "country",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#8f5a33ff"
+        }
+    },
+    {
+        "featureType": "country",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "country",
+        "elementType": "labels.text",
+        "stylers": {
+            "fontsize": 28
+        }
+    },
+    {
+        "featureType": "manmade",
+        "elementType": "geometry",
+        "stylers": {
+            "color": "#dfe7e7ff"
+        }
+    },
+    {
+        "featureType": "provincialway",
+        "elementType": "geometry.fill",
+        "stylers": {
+            "color": "#fbfffeff"
+        }
+    },
+    {
+        "featureType": "tertiaryway",
+        "elementType": "geometry.fill",
+        "stylers": {
+            "color": "#fbfffeff"
+        }
+    },
+    {
+        "featureType": "manmade",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "manmade",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "scenicspots",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "scenicspots",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "airportlabel",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "airportlabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "scenicspotslabel",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "scenicspotslabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "educationlabel",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "educationlabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "medicallabel",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "medicallabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "companylabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "restaurantlabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "hotellabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "hotellabel",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "shoppinglabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "shoppinglabel",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "lifeservicelabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "carservicelabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "transportationlabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "transportationlabel",
+        "elementType": "labels",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "financelabel",
+        "elementType": "labels.icon",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "entertainment",
+        "elementType": "geometry",
+        "stylers": {
+            "color": "#d1dbdbff"
+        }
+    },
+    {
+        "featureType": "estate",
+        "elementType": "geometry",
+        "stylers": {
+            "color": "#d1dbdbff"
+        }
+    },
+    {
+        "featureType": "shopping",
+        "elementType": "geometry",
+        "stylers": {
+            "color": "#d1dbdbff"
+        }
+    },
+    {
+        "featureType": "education",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "education",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "medical",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "medical",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    },
+    {
+        "featureType": "transportation",
+        "elementType": "labels.text.fill",
+        "stylers": {
+            "color": "#999999ff"
+        }
+    },
+    {
+        "featureType": "transportation",
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffffffff"
+        }
+    }
+]
+
+  </script>
+<script>
+  var lines = [
+[
+    [
+        121.67558598467178,
+        31.148499279579234
+    ],
+    [
+        121.67566674622017,
+        31.148526102051182
+    ],
+    [
+        121.67566674622017,
+        31.148526102051182
+    ],
+    [
+        121.67573359805029,
+        31.148500790427843
+    ],
+    [
+        121.675776495705,
+        31.148492228234364
+    ],
+    [
+        121.67586626982548,
+        31.148487136177078
+    ],
+    [
+        121.67678373448244,
+        31.14875993435118
+    ],
+    [
+        121.6780445871956,
+        31.149108816096543
+    ],
+    [
+        121.6807060778462,
+        31.14993995333754
+    ],
+    [
+        121.68191416414176,
+        31.150299963410138
+    ],
+    [
+        121.68217978218472,
+        31.150389091869517
+    ],
+    [
+        121.68252728957475,
+        31.15052545886044
+    ],
+    [
+        121.68252728957475,
+        31.15052545886044
+    ],
+    [
+        121.68263415468887,
+        31.15055685800716
+    ],
+    [
+        121.68283797511653,
+        31.15054660563008
+    ],
+    [
+        121.68283797511653,
+        31.15054660563008
+    ],
+    [
+        121.68278741292272,
+        31.150153523093493
+    ],
+    [
+        121.68275483823787,
+        31.149758504486016
+    ],
+    [
+        121.68273526619224,
+        31.149350536090093
+    ],
+    [
+        121.68273579893038,
+        31.14882167205793
+    ],
+    [
+        121.68276499004249,
+        31.14860583324906
+    ],
+    [
+        121.68271739895887,
+        31.14824575106753
+    ],
+    [
+        121.68271739895887,
+        31.14824575106753
+    ],
+    [
+        121.68258969543317,
+        31.14807331750085
+    ],
+    [
+        121.68254987030987,
+        31.14793919948535
+    ],
+    [
+        121.6825639783031,
+        31.147819284162765
+    ],
+    [
+        121.68262505003015,
+        31.147690548942098
+    ],
+    [
+        121.6827110697105,
+        31.14759089484479
+    ],
+    [
+        121.68299395776171,
+        31.147449933347904
+    ],
+    [
+        121.68299395776171,
+        31.147449933347904
+    ],
+    [
+        121.68310400791222,
+        31.147308338245974
+    ],
+    [
+        121.68339039064331,
+        31.146706395873352
+    ],
+    [
+        121.68368174414054,
+        31.146150374430157
+    ],
+    [
+        121.68375185577969,
+        31.14599360328452
+    ],
+    [
+        121.6838170766939,
+        31.145733841077796
+    ],
+    [
+        121.68384541813246,
+        31.145380004976637
+    ],
+    [
+        121.68384173256439,
+        31.14507307428919
+    ],
+    [
+        121.68380401132778,
+        31.144823040859713
+    ],
+    [
+        121.68375525912876,
+        31.144610967011698
+    ],
+    [
+        121.68372237785817,
+        31.14451590356138
+    ],
+    [
+        121.68364260967705,
+        31.14434173068102
+    ],
+    [
+        121.68345411657752,
+        31.143976285039233
+    ],
+    [
+        121.68322358595601,
+        31.143689650962457
+    ],
+    [
+        121.68303594048318,
+        31.143493086497926
+    ],
+    [
+        121.68281033525467,
+        31.143299350836312
+    ],
+    [
+        121.68260566800498,
+        31.143159630805666
+    ],
+    [
+        121.68220429899034,
+        31.142937085955374
+    ],
+    [
+        121.68168209719013,
+        31.14272981883225
+    ],
+    [
+        121.6808494796374,
+        31.142428647613457
+    ],
+    [
+        121.68041228570065,
+        31.142258192407738
+    ],
+    [
+        121.67991624695856,
+        31.142074182924187
+    ],
+    [
+        121.678982204913,
+        31.141739880896143
+    ],
+    [
+        121.67747881486295,
+        31.14117304397017
+    ],
+    [
+        121.67679362465307,
+        31.14092196798631
+    ],
+    [
+        121.67586524806782,
+        31.140577076499337
+    ],
+    [
+        121.67573161753431,
+        31.140551729400624
+    ],
+    [
+        121.67561392363736,
+        31.140552524809205
+    ],
+    [
+        121.67540745477068,
+        31.14056737995103
+    ],
+    [
+        121.67540745477068,
+        31.14056737995103
+    ],
+    [
+        121.675359547119,
+        31.140603869252846
+    ],
+    [
+        121.67530167169879,
+        31.140635252733446
+    ],
+    [
+        121.6752418062811,
+        31.140662613260307
+    ],
+    [
+        121.6751360667916,
+        31.140689481519438
+    ],
+    [
+        121.67504032362689,
+        31.14069445329945
+    ],
+    [
+        121.67492865493791,
+        31.140670251521264
+    ],
+    [
+        121.67477113901673,
+        31.1406235416909
+    ],
+    [
+        121.67470636736486,
+        31.14057583939546
+    ],
+    [
+        121.67466751332837,
+        31.14053841853604
+    ],
+    [
+        121.67461671689091,
+        31.1404768694229
+    ],
+    [
+        121.67457291070806,
+        31.1404053985066
+    ],
+    [
+        121.674539090833,
+        31.14031904121421
+    ],
+    [
+        121.674539090833,
+        31.14031904121421
+    ],
+    [
+        121.6744165727121,
+        31.140183696985932
+    ],
+    [
+        121.67436078049647,
+        31.140135077694424
+    ],
+    [
+        121.67421629217623,
+        31.140039454934588
+    ],
+    [
+        121.67407474050137,
+        31.140004834857198
+    ],
+    [
+        121.67378561457129,
+        31.13999046248872
+    ],
+    [
+        121.67333697357569,
+        31.1400000905525
+    ],
+    [
+        121.67301793234219,
+        31.14004016675408
+    ],
+    [
+        121.6728354763013,
+        31.140076884212895
+    ],
+    [
+        121.67263606431834,
+        31.140131357088265
+    ],
+    [
+        121.67224018651102,
+        31.140309234804974
+    ],
+    [
+        121.67166683530237,
+        31.14059560324008
+    ],
+    [
+        121.6710586227189,
+        31.140926241491655
+    ],
+    [
+        121.66906494750944,
+        31.141984067358802
+    ],
+    [
+        121.66829556833214,
+        31.142381133423715
+    ],
+    [
+        121.66794776990672,
+        31.142572620296015
+    ],
+    [
+        121.66794776990672,
+        31.142572620296015
+    ],
+    [
+        121.66787918202633,
+        31.142437566137176
+    ],
+    [
+        121.66743426832994,
+        31.142163519409916
+    ],
+    [
+        121.66671571521013,
+        31.141699914447894
+    ],
+    [
+        121.66654451889231,
+        31.141617102782448
+    ],
+    [
+        121.66629272785055,
+        31.141474945069714
+    ],
+    [
+        121.66607971451019,
+        31.141397392838606
+    ],
+    [
+        121.66592838471051,
+        31.14137684760641
+    ],
+    [
+        121.66579196340754,
+        31.141386537029266
+    ],
+    [
+        121.66551021000399,
+        31.141361747587183
+    ],
+    [
+        121.6650492560307,
+        31.14133483010189
+    ],
+    [
+        121.66465603598182,
+        31.1412960056038
+    ],
+    [
+        121.66439923814697,
+        31.14123952068579
+    ],
+    [
+        121.66415244630274,
+        31.141138196062254
+    ],
+    [
+        121.66389772313453,
+        31.141009712627017
+    ],
+    [
+        121.66334553952669,
+        31.14070291527562
+    ],
+    [
+        121.66274068093423,
+        31.14034006437853
+    ],
+    [
+        121.6623984371336,
+        31.140169862699683
+    ],
+    [
+        121.6623984371336,
+        31.140169862699683
+    ],
+    [
+        121.66216950940743,
+        31.140166668592382
+    ],
+    [
+        121.66196550027274,
+        31.14013092538921
+    ]
+],
+[
+    [
+        121.67558598467178,
+        31.148499279579234
+    ],
+    [
+        121.67566674622017,
+        31.148526102051182
+    ],
+    [
+        121.67566674622017,
+        31.148526102051182
+    ],
+    [
+        121.67560985599489,
+        31.14856450907438
+    ],
+    [
+        121.67556691042371,
+        31.148622052558814
+    ],
+    [
+        121.67542293073936,
+        31.14897847032358
+    ],
+    [
+        121.67533901431206,
+        31.14911755709826
+    ],
+    [
+        121.67514626449979,
+        31.149385449905377
+    ],
+    [
+        121.67503048845383,
+        31.149477186309795
+    ],
+    [
+        121.67503048845383,
+        31.149477186309795
+    ],
+    [
+        121.67487786515329,
+        31.14952152229378
+    ],
+    [
+        121.67481703109841,
+        31.149524857155413
+    ],
+    [
+        121.67463356953792,
+        31.14950184081457
+    ],
+    [
+        121.67451294171043,
+        31.14947250341904
+    ],
+    [
+        121.67422586724246,
+        31.149375279480104
+    ],
+    [
+        121.6738320992389,
+        31.149306732928864
+    ],
+    [
+        121.6738320992389,
+        31.149306732928864
+    ],
+    [
+        121.67381310500559,
+        31.149357497241837
+    ],
+    [
+        121.67377318403429,
+        31.149398017148137
+    ],
+    [
+        121.67372031467015,
+        31.14942638557344
+    ],
+    [
+        121.67370522463352,
+        31.149561173960194
+    ],
+    [
+        121.67369295575068,
+        31.149865954257127
+    ],
+    [
+        121.67363772261069,
+        31.150266200945204
+    ],
+    [
+        121.67339227451671,
+        31.151475965428798
+    ],
+    [
+        121.67303660201942,
+        31.153316183286464
+    ],
+    [
+        121.67294448042504,
+        31.153751940605602
+    ],
+    [
+        121.67287950042888,
+        31.15395008553736
+    ],
+    [
+        121.67283455236405,
+        31.15404750129321
+    ],
+    [
+        121.67275767955319,
+        31.15417450758558
+    ],
+    [
+        121.67266785574353,
+        31.15429534709609
+    ],
+    [
+        121.67235657031304,
+        31.15461730050021
+    ],
+    [
+        121.67223682995426,
+        31.154763719705844
+    ],
+    [
+        121.67215697341557,
+        31.154895651987083
+    ],
+    [
+        121.67209706633443,
+        31.15501184416216
+    ],
+    [
+        121.67202710110074,
+        31.15522987933814
+    ],
+    [
+        121.67190000155702,
+        31.155813077609345
+    ],
+    [
+        121.67190000155702,
+        31.155813077609345
+    ],
+    [
+        121.67177142118662,
+        31.155830367798107
+    ],
+    [
+        121.66943813719952,
+        31.155488471814458
+    ],
+    [
+        121.66756282149888,
+        31.155180503465736
+    ],
+    [
+        121.66384643231596,
+        31.15459659791415
+    ],
+    [
+        121.6632134222105,
+        31.15448829042864
+    ],
+    [
+        121.66288898395015,
+        31.154416443227934
+    ],
+    [
+        121.66271582842909,
+        31.15437030970307
+    ],
+    [
+        121.66252875343127,
+        31.15430991562406
+    ],
+    [
+        121.66223124563777,
+        31.154197498907866
+    ],
+    [
+        121.66187905050377,
+        31.154033059079115
+    ],
+    [
+        121.66163135077912,
+        31.153890514740343
+    ],
+    [
+        121.66147916345192,
+        31.153790717143906
+    ],
+    [
+        121.66130809500326,
+        31.15366156901941
+    ],
+    [
+        121.66103859400289,
+        31.15342960098073
+    ],
+    [
+        121.66082580497051,
+        31.153221671713464
+    ],
+    [
+        121.66052459786485,
+        31.152851109633257
+    ],
+    [
+        121.6603706023108,
+        31.152573278635277
+    ],
+    [
+        121.6602792302252,
+        31.152376603958302
+    ],
+    [
+        121.66020776803961,
+        31.152175303971983
+    ],
+    [
+        121.66014923854131,
+        31.15198024553073
+    ],
+    [
+        121.66002717282124,
+        31.151624024761894
+    ],
+    [
+        121.65997069930182,
+        31.15136401854435
+    ],
+    [
+        121.65995012620604,
+        31.15103070728615
+    ],
+    [
+        121.65997335180411,
+        31.15068922557261
+    ],
+    [
+        121.66001643525225,
+        31.150396107684674
+    ],
+    [
+        121.66005941666842,
+        31.15020696332223
+    ],
+    [
+        121.66013031277777,
+        31.149969356578772
+    ],
+    [
+        121.66069409786623,
+        31.148491306401308
+    ],
+    [
+        121.66106433798535,
+        31.147501466222067
+    ],
+    [
+        121.66115911073364,
+        31.14728228573679
+    ],
+    [
+        121.6614981125073,
+        31.146685730926635
+    ],
+    [
+        121.66172737303569,
+        31.146350056456487
+    ],
+    [
+        121.6619765222157,
+        31.14603572870233
+    ],
+    [
+        121.6623422010064,
+        31.14565353457885
+    ],
+    [
+        121.6626082117314,
+        31.145409451684642
+    ],
+    [
+        121.662904083506,
+        31.145171885940574
+    ],
+    [
+        121.66359839495436,
+        31.144683504204647
+    ],
+    [
+        121.66483051732871,
+        31.14403239539329
+    ],
+    [
+        121.66483051732871,
+        31.14403239539329
+    ],
+    [
+        121.66513832248641,
+        31.14387076558229
+    ],
+    [
+        121.66535454583249,
+        31.143701526240385
+    ],
+    [
+        121.66544822819303,
+        31.143611153119647
+    ],
+    [
+        121.66556181652814,
+        31.14352911365285
+    ],
+    [
+        121.66556181652814,
+        31.14352911365285
+    ],
+    [
+        121.66555991273266,
+        31.143442102053125
+    ],
+    [
+        121.66562675647398,
+        31.143309273300293
+    ],
+    [
+        121.66565068954985,
+        31.143272689516177
+    ],
+    [
+        121.66571447958688,
+        31.14320678998443
+    ],
+    [
+        121.66577426528724,
+        31.14316281536511
+    ],
+    [
+        121.66584200686933,
+        31.143128971316877
+    ],
+    [
+        121.6659704886722,
+        31.14309415067935
+    ],
+    [
+        121.66617760762335,
+        31.143087635176723
+    ],
+    [
+        121.66623535008067,
+        31.143098599797344
+    ],
+    [
+        121.66623535008067,
+        31.143098599797344
+    ],
+    [
+        121.6663240142074,
+        31.14305709173184
+    ],
+    [
+        121.66660485812038,
+        31.143023767816285
+    ],
+    [
+        121.66671541493884,
+        31.143001599719575
+    ],
+    [
+        121.66688873887112,
+        31.142951462571457
+    ],
+    [
+        121.66787918202633,
+        31.142437566137176
+    ],
+    [
+        121.66787918202633,
+        31.142437566137176
+    ],
+    [
+        121.66743426832994,
+        31.142163519409916
+    ],
+    [
+        121.66671571521013,
+        31.141699914447894
+    ],
+    [
+        121.66654451889231,
+        31.141617102782448
+    ],
+    [
+        121.66629272785055,
+        31.141474945069714
+    ],
+    [
+        121.66607971451019,
+        31.141397392838606
+    ],
+    [
+        121.66592838471051,
+        31.14137684760641
+    ],
+    [
+        121.66579196340754,
+        31.141386537029266
+    ],
+    [
+        121.66551021000399,
+        31.141361747587183
+    ],
+    [
+        121.6650492560307,
+        31.14133483010189
+    ],
+    [
+        121.66465603598182,
+        31.1412960056038
+    ],
+    [
+        121.66439923814697,
+        31.14123952068579
+    ],
+    [
+        121.66415244630274,
+        31.141138196062254
+    ],
+    [
+        121.66389772313453,
+        31.141009712627017
+    ],
+    [
+        121.66334553952669,
+        31.14070291527562
+    ],
+    [
+        121.66274068093423,
+        31.14034006437853
+    ],
+    [
+        121.6623984371336,
+        31.140169862699683
+    ],
+    [
+        121.6623984371336,
+        31.140169862699683
+    ],
+    [
+        121.66216950940743,
+        31.140166668592382
+    ],
+    [
+        121.66196550027274,
+        31.14013092538921
+    ]
+]
+].map(line => {
+return line.map(item => {
+  return new BMapGL.Point(item[0], item[1])
+  })
+})
+</script>
+
+  <div id="map_container"></div>
+  <div style="position: fixed;top:20px;padding:20px;background:#fff;width:100%;z-index: 100;">
+    <button onclick="addPolylines()">添加线路</button>
+    <button onclick="window.location.reload()">reload</button>
+  </div>
+
+
+
+<script>
+    var map = new BMapGL.Map('map_container', {
+
+    });
+
+    map.enableKeyboard();
+    map.enableScrollWheelZoom();
+    map.enableInertialDragging();
+    map.enableContinuousZoom();
+    map.setMapStyleV2({styleJson: theme});
+    const center = new BMapGL.Point(121.30654632240122, 31.25744185633306)
+    map.centerAndZoom(center,  12);
+
+
+
+    function addPolylines() {
+
+      let allPoints = [];
+      lines.map((points) => {
+        allPoints = allPoints.concat(points)
+      })
+
+
+      const polylines = lines.map((points, index) => {
+        return new BMapGL.Polyline(points, {
+            strokeWeight: 7,
+            strokeColor: index === 0 ? 'blue' : 'red',
+            // strokeTexture: {
+            //   url:index === 0?'https://mapopen-pub-jsapigl.bj.bcebos.com/svgmodel/Icon_road_red_arrow.png':
+            //               'https://mapopen-pub-jsapigl.bj.bcebos.com/svgmodel/Icon_road_blue_arrow.png',
+            //   width: 64,
+            //   height: 256,
+            // }
+        })
+      })
+
+      polylines.forEach((item) => {
+          map.addOverlay(item)
+      })
+
+      // 设置最佳视野
+      map.setViewport(allPoints)
+
+
+      // 移除
+      polylines.forEach((item, index) => {
+          map.removeOverlay(item)
+      })
+
+      // 再添加操作
+      polylines.forEach((item) => {
+          map.addOverlay(item)
+        //   item.show()
+      })
+
+    }
+
+
+</script>
+
+</body>
+</html>
+
+
+
+
