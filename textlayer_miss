@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>MapVGL</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #map_container {
+        height: 100vh;
+    }
+
+    </style>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?type=webgl&v=1.0&ak=zLhopYPPERGtpGOgimcdKcCimGRyyIsh&services="></script>
+    <script src="https://unpkg.com/mapvgl@1.0.0-beta.186/dist/mapvgl.min.js"></script>
+
+</head>
+<body>
+
+
+
+  <div id="map_container"></div>
+
+
+
+
+<script>
+    var map = new BMapGL.Map('map_container');
+    map.enableScrollWheelZoom();
+    map.centerAndZoom(new BMapGL.Point(110.30654632240122, 31.25744185633306),  5);
+
+    var view = new mapvgl.View({
+        map: map
+    });
+
+    var textLayer = new mapvgl.TextLayer({
+        autoSelect: true,
+        collides :false,
+        textMaxWidth: 80,
+        textMaxHeight: 50,
+    });
+
+
+    view.addLayer(textLayer);
+
+    textLayer.setData(Array(100).fill(null).map((item, index) => {
+      const cord = [111 + 6 * Math.random(), 31 + 10 * Math.random()]
+      return {
+        geometry: {
+          type: 'Point',
+          coordinates: cord
+        },
+        properties: {
+          text: `当前坐标：${index}`,
+          color: 'blue'
+        }
+      }
+    }));
+
+
+
+</script>
+
+</body>
+</html>
+
+
+
+
