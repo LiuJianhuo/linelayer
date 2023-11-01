@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>MapVGL</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #map_container {
+        height: 40vh;
+        width: 40vh;
+    }
+
+    </style>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?type=webgl&v=1.0&ak=zLhopYPPERGtpGOgimcdKcCimGRyyIsh&services="></script>
+
+
+</head>
+<body>
+
+
+
+  <div id="map_container"></div>
+
+
+
+
+<script>
+    var map = new BMapGL.Map('map_container', {
+
+    });
+
+
+    map.enableScrollWheelZoom();
+    const center = new BMapGL.Point(121.30654632240122, 31.25744185633306)
+    map.centerAndZoom(center,  12);
+
+    map.addEventListener('mousemove', e =>{
+      console.log('mousemove', e);
+    })
+
+    map.addEventListener('mouseoute', e =>{
+      console.log('mouseoute', e);
+    })
+
+</script>
+
+</body>
+</html>
+
+
+
+
