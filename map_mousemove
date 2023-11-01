@@ -47,8 +47,8 @@
       console.log('mousemove', e);
     })
 
-    map.addEventListener('mouseoute', e =>{
-      console.log('mouseoute', e);
+    map.addEventListener('mouseout', e =>{
+      console.log('mouseout', e);
     })
 
 </script>
